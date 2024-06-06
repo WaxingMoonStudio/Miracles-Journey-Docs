@@ -20,7 +20,7 @@ jobs:
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUBTOKEN }}
+          personal_token: ${{ secrets.GITHUBTOKEN }}
           publish_dir: .
           external_repository: QianFuv/Miracles-Journey-Docs
           publish_branch: main
