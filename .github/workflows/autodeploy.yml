@@ -19,7 +19,6 @@ jobs:
 
       - name: 2. 推送个人仓库 # Deploy：github.io仓库中日志只保留最新
         run: |
-          cd ./public
           git init
           git config --global user.name '${{ secrets.GITHUBUSERNAME }}'
           git config --global user.email '${{ secrets.GITHUBEMAIL }}'
