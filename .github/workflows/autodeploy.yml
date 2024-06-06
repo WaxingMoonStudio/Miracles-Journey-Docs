@@ -1,0 +1,28 @@
+name: Deploy # 部署
+
+on: # 触发条件
+  push:
+    branches:
+      - main # 推送到 main 分支（这里的分支名很重要，不要弄错了
+
+  workflow_dispatch: # 手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. 检出仓库 # Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: 2. 推送个人仓库 # Deploy：github.io仓库中日志只保留最新
+        run: |
+          cd ./public
+          git init
+          git config --global user.name '${{ secrets.GITHUBUSERNAME }}'
+          git config --global user.email '${{ secrets.GITHUBEMAIL }}'
+          git add .
+          git commit -m "${{ github.event.head_commit.message }} $(date +"%Z %Y-%m-%d %A %H:%M:%S") Updated By Github Actions"
+          git push --force --quiet "https://${{ secrets.GITHUBUSERNAME }}:${{ secrets.GITHUBTOKEN }}@github.com/${{ secrets.GITHUBUSERNAME }}/Miracles-Journey-Docs.git" master:master
